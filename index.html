@@ -367,10 +367,10 @@ let cur = null;     // {q, order, picked, input, result}
 
 function buildQueue(practice){
   const now = Date.now(), p = pool();
-  if (practice) return shuffle(p).sort((a,b) => peek(a.id).box - peek(b.id).box || peek(a.id).due - peek(b.id).due).map(q => q.id);
-  const due = p.filter(q => peek(q.id).seen > 0 && peek(q.id).due <= now)
-               .sort((a,b) => peek(a.id).box - peek(b.id).box || peek(a.id).due - peek(b.id).due);
-  const fresh = p.filter(q => !peek(q.id).seen);
+  // Random order everywhere; spaced repetition only decides WHICH cards come first.
+  if (practice) return shuffle(p).map(q => q.id);
+  const due = shuffle(p.filter(q => peek(q.id).seen > 0 && peek(q.id).due <= now));
+  const fresh = shuffle(p.filter(q => !peek(q.id).seen));
   return [...due, ...fresh].map(q => q.id);
 }
 function startStudy(practice){
@@ -467,7 +467,7 @@ function submitStudy(answer){
   cur.result = ok;
   grade(q, ok);
   if (!ok){ // see it again later this round
-    const pos = Math.min(study.queue.length, 3);
+    const pos = Math.min(study.queue.length, 3 + Math.floor(Math.random() * 4)); // back in 3–6 cards
     if (!study.queue.includes(q.id)) study.queue.splice(pos, 0, q.id);
   }
   save(); renderStats(); renderCard(); milestones(); persist();

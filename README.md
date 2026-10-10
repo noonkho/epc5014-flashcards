@@ -4,7 +4,7 @@ Bilingual (English / 繁體中文) flashcard game for EPC5014 *Foundations and P
 
 **Play:** https://noonkho.github.io/epc5014-flashcards/
 
-- 149 questions (multiple choice and put-in-order tiles), each with a simple explanation and slide reference.
+- 302 questions (multiple choice and put-in-order tiles) covering 97–100% of the testable slide points per topic, each with a simple explanation, slide reference and, for key ideas, a diagram.
 - Spaced repetition (Leitner boxes): due cards first, wrong cards come back soon.
 - Study mode (instant feedback) and Test mode (timed, results at the end).
 - Filters by topic, difficulty, question type, ★ high-yield, weak cards.

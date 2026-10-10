@@ -366,11 +366,12 @@ let study = null;   // {queue:[ids], done:n}
 let cur = null;     // {q, order, picked, input, result}
 
 function buildQueue(practice){
-  const now = Date.now(), p = pool();
   // Random order everywhere; spaced repetition only decides WHICH cards come first.
-  if (practice) return shuffle(p).map(q => q.id);
-  const due = shuffle(p.filter(q => peek(q.id).seen > 0 && peek(q.id).due <= now));
-  const fresh = shuffle(p.filter(q => !peek(q.id).seen));
+  // Shuffle once: filter keeps that order inside each group.
+  const now = Date.now(), p = shuffle(pool());
+  if (practice) return p.map(q => q.id);
+  const due = p.filter(q => peek(q.id).seen > 0 && peek(q.id).due <= now);
+  const fresh = p.filter(q => !peek(q.id).seen);
   return [...due, ...fresh].map(q => q.id);
 }
 function startStudy(practice){
